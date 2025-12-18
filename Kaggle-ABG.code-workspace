@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "Kaggle-ABG",
+			"path": "."
+		},
+		{
+			"name": "titanic",
+			"path": "../../../Desktop/kaggle/titanic"
+		},
+		{
+			"name": "liver-sickness",
+			"path": "../../../Desktop/kaggle/liver-sickness"
+		}
+	],
+	"settings": {}
+}
