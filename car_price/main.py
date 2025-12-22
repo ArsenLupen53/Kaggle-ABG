@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-veriler = pd.read_csv("car_price_pred.csv")
+veriler = pd.read_csv("car_price/car_price_pred.csv")
 
 
 veriler = veriler.iloc[:,1:]
