@@ -11,12 +11,12 @@ import numpy as np
 
 
 #train data çekiyoruz
-x_data=pd.read_csv("train.csv")
+x_data=pd.read_csv("house_price_advanced/train.csv")
 x_train= x_data.iloc[:,:-1]
 y_train = x_data.iloc[:,-1]
 
 #test data çekiyoruz
-x_test = pd.read_csv("test.csv")
+x_test = pd.read_csv("house_price_advanced/test.csv")
 
 #train datasetini encode
 numerical_cols = x_train.select_dtypes(include=["number"]).columns
