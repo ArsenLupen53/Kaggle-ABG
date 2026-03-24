@@ -63,7 +63,7 @@ knn.fit(X_train,y_train)
 
 #tahmin yap, değerlendir
 y_pred = knn.predict(X_test)
-#print(f"KNN Başarı Oranı: {accuracy_score(y_test, y_pred):.2f}")
+print(f"KNN Başarı Oranı: {accuracy_score(y_test, y_pred):.2f}")
 #0.84 başarı
 
 #Destek Vektör Makinesi
@@ -79,4 +79,4 @@ svm_model.fit(X_train,y_train)
 y_pred_svm = svm_model.predict(X_test)
 
 #Değerlendir
-print(f"SVM Başarı Oranı: {accuracy_score(y_test, y_pred_svm):.2f}")
+#print(f"SVM Başarı Oranı: {accuracy_score(y_test, y_pred_svm):.2f}")
