@@ -1,3 +1,4 @@
+
 #import libraries
 import pandas as pd
 import numpy as np
@@ -10,27 +11,6 @@ test = pd.read_csv("test.csv")
 x_train = train.iloc[:,1:-1]
 y_train = train.iloc[:,-1:]
 x_test = test.iloc[:,1:]
-
-
-
-#splitting datas which will be encoded
-train_gender = x_train.iloc[:,0:1]
-test_gender = x_test.iloc[:,0:1]
-
-train_partner = x_train.iloc[:,2:3]
-test_partner = x_test.iloc[:,2:3]
-
-train_dependents = x_train.iloc[:,3:4]
-test_dependents = x_test.iloc[:,3:4]
-
-train_phone = x_train.iloc[:,5:6]
-test_phone = x_test.iloc[:,5:6]
-
-train_lines = x_train.iloc[:,6:7]
-test_lines = x_test.iloc[:,6:7]
-
-train_internet = x_train.iloc[:,7:8]
-test_internet = x_test.iloc[:,7:8]
 
 
 
@@ -63,20 +43,28 @@ knn.fit(X_train,y_train)
 
 #tahmin yap, değerlendir
 y_pred = knn.predict(X_test)
-print(f"KNN Başarı Oranı: {accuracy_score(y_test, y_pred):.2f}")
+#print(f"KNN Başarı Oranı: {accuracy_score(y_test, y_pred):.2f}")
 #0.84 başarı
 
-#Destek Vektör Makinesi
-from sklearn.svm import SVC
+# test.csv verileri üzerinde tahmin yap (predict)
+# x_test_encoded hali hazırda get_dummies ile dönüştürülmüş ve ölçeklendirilmiş olmalıdır
+# main.py dosyasındaki scaler objesini kullanarak x_test_encoded'ı ölçeklendiriyoruz
+X_test_final = scaler.transform(x_test_encoded)
+predictions = knn.predict(X_test_final)
 
-#modeli tanımla
-svm_model = SVC(kernel="linear",C=1.0) #C: Hata payı toleransı
+if predictions.dtype == 'object':
+    predictions = pd.Series(predictions).map({'No': 0, 'Yes': 1}).values
 
-#modeli eğit
-svm_model.fit(X_train,y_train)
+# sample_submission formatında dataframe oluştur
+submission = pd.DataFrame({
+    'id': test['id'],
+    'Churn': predictions
+})
 
-#tahmin yap
-y_pred_svm = svm_model.predict(X_test)
+# Churn değerlerini eğer model 0/1 yerine No/Yes döndürüyorsa veya tam tersi ise kontrol et
+# submission['Churn'] = submission['Churn'].replace({1: 'Yes', 0: 'No'}) # Gerekirse kullanabilirsin
 
-#Değerlendir
-#print(f"SVM Başarı Oranı: {accuracy_score(y_test, y_pred_svm):.2f}")
+# Sonucu CSV olarak kaydet
+submission.to_csv('customer_churn/submission.csv', index=False)
+
+print("Tahminler başarıyla 'submission.csv' dosyasına kaydedildi.")
